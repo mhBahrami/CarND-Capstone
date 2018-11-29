@@ -258,7 +258,7 @@ class WaypointUpdater(object):
 
 
     def obstacle_waypoint_cb(self, msg):
-        # TODO: Callback for /obstacle_waypoint message. We will implement it later
+        # Callback for /obstacle_waypoint message. We will implement it later
         pass
 
 
