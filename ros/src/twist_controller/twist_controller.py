@@ -16,6 +16,7 @@ class Controller(object):
 
         config_string = rospy.get_param("/traffic_light_config")
         self.config = yaml.load(config_string)
+        # rospy.logwarn("{0}".format(self.config['is_site']))
 
         min_speed = 0.1
         self.yaw_controller = YawController(wheel_base, steer_ratio, min_speed, max_lat_accel, max_steer_angle)
@@ -74,7 +75,7 @@ class Controller(object):
                 roll forward with only 400Nm of torque. To prevent Carla from moving you should 
                 apply approximately 700 Nm of torque.
                 '''
-                brake = 700 if self.config.is_site else 400 # [N*m] - to hold car in place if we are stopped at a light. Acceleration ~ 1 [m/sec^2]
+                brake = 700 if self.config['is_site'] else 400 # [N*m] - to hold car in place if we are stopped at a light. Acceleration ~ 1 [m/sec^2]
 
         # Calculate steering
         steering = self.yaw_controller.get_steering(target_v, target_w, current_v)

@@ -12,7 +12,7 @@ import tf
 import cv2
 import yaml
 
-STATE_COUNT_THRESHOLD = 3
+STATE_COUNT_THRESHOLD = 1
 WORLD_TYPE = 'sim'
 
 class TLDetector(object):

@@ -199,8 +199,8 @@ class WaypointUpdater(object):
 
     def decelerate_waypoints(self, waypoints, closest_idx):
         decel_wps = []
-        # 4 waypoints back from line so front of car stops at line
-        stop_idx = max((self.stopline_wp_idx - 4) - closest_idx, 0) if self.stopline_wp_idx is not None else 0
+        # 2 waypoints back from line so front of car stops at line
+        stop_idx = max((self.stopline_wp_idx - 2) - closest_idx, 0) if self.stopline_wp_idx is not None else 0
         while stop_idx >= len(waypoints):
             stop_idx -= len(waypoints)
 
