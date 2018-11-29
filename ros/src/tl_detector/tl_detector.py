@@ -13,11 +13,12 @@ import cv2
 import yaml
 
 STATE_COUNT_THRESHOLD = 3
+WORLD_TYPE = 'sim'
 
 class TLDetector(object):
     def __init__(self):
-        rospy.init_node('tl_detector')
 
+        rospy.init_node('tl_detector')
         self.pose = None
         self.waypoints = None
         self.waypoints_2d = None
@@ -58,7 +59,7 @@ class TLDetector(object):
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier()
+        self.light_classifier = TLClassifier(WORLD_TYPE)
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
@@ -102,6 +103,7 @@ class TLDetector(object):
         of times till we start using it. Otherwise the previous stable state is
         used.
         '''
+                
         if self.state != state:
             self.state_count = 0
             self.state = state
@@ -135,7 +137,7 @@ class TLDetector(object):
             int: index of the closest waypoint in self.waypoints
 
         """
-        
+                
         closest_idx = self.waypoints_tree.query([x, y], 1)[1]
         return closest_idx
 
@@ -151,16 +153,16 @@ class TLDetector(object):
 
         """
         # For testing just return light state
-        return light.state
+        # return light.state
+        
+        if(not self.has_image):
+            self.prev_light_loc = None
+            return False
 
-        # if(not self.has_image):
-        #     self.prev_light_loc = None
-        #     return False
+        cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
 
-        # cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-
-        # #Get classification
-        # return self.light_classifier.get_classification(cv_image)
+        #Get classification
+        return self.light_classifier.get_classification(cv_image)
 
 
     def process_traffic_lights(self):
@@ -172,6 +174,7 @@ class TLDetector(object):
             int: ID of traffic light color (specified in styx_msgs/TrafficLight)
 
         """
+                
         closest_light = None
         line_wp_idx = None
 
