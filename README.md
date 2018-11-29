@@ -124,7 +124,12 @@ git clone https://github.com/udacity/CarND-Capstone.git
 cd CarND-Capstone
 pip install -r requirements.txt
 ```
-3. Make and run styx
+3. Make sure `*.py` files and `*.sh` files are executable
+```bash
+find [/YOUR/DIRECTORY/TO]/CarND-Capstone -type f -iname "*.py" -exec chmod +x {} \;
+find [/YOUR/DIRECTORY/TO]/CarND-Capstone -type f -iname "*.sh" -exec chmod +x {} \;
+```
+4. Make and run styx
 ```bash
 cd ros
 catkin_make
