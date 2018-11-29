@@ -66,6 +66,7 @@ class TLDetector(object):
         self.last_state = TrafficLight.UNKNOWN
         self.last_wp = -1
         self.state_count = 0
+        # self.cv2_counter = 0
 
         rospy.spin()
 
@@ -160,7 +161,9 @@ class TLDetector(object):
             return False
 
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-
+        # if(self.cv2_counter % 3 == 0):
+        #     cv2.imwrite("./source/count_1_{0}.png".format(self.cv2_counter),cv_image)
+        # self.cv2_counter += 1
         #Get classification
         return self.light_classifier.get_classification(cv_image)
 
