@@ -1,5 +1,68 @@
 This is the project repo for the final project of the Udacity Self-Driving Car Nanodegree: Programming a Real Self-Driving Car. For more information about the project, see the project introduction [here](https://classroom.udacity.com/nanodegrees/nd013/parts/6047fe34-d93c-4f50-8336-b70ef10cb4b2/modules/e1a23b06-329a-4684-a717-ad476f0d8dff/lessons/462c933d-9f24-42d3-8bdc-a08a5fc866e4/concepts/5ab4b122-83e6-436d-850f-9f4d26627fd9).
 
+### Team Members
+
+* [Xiaoqi Li](https://github.com/Charlie-Xiaoqi) - team lead
+* [Mohammad Hossein Bahramimanesh](https://github.com/mhBahrami) - trajectory planner, controller and integrator
+* [Nikola Noxon](https://github.com/nikolanoxon) - traffic light detection
+* [Tamoghna Das](https://github.com/tamoghna21) - traffic light detection and controller
+
+### Project Components
+
+* diagram of nodes and messages
+
+#### Visualization
+
+[![visualization-video](https://github.com/erlink.png)](https://www.youtube.com)
+
+#### Traffic Light Detection
+
+* We adopted the inception v2 model from the tensorflow zoo, the architecture of the model can be found over here: 
+[Inception v2 architecture](https://towardsdatascience.com/a-simple-guide-to-the-versions-of-the-inception-network-7fc52b863202)
+
+#### Traffic Light Classification
+
+| Simulator model         | Test site model                            |
+|:-----------------------:|:--------------------------------------:|
+| ![simulator model](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/Classification_image/Simulator_image.png)          | ![Test site model](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/Classification_image/Testsite_image.png)
+
+* Four output classes: GREEN, YELLOW, RED, NONE.
+* Test accuracy: lowest precision was red at 98%, lowest recall was green at 88%.
+* See model and training code in [Nikola's repo](https://github.com/nikolanoxon/CarND-Traffic-Light-Classifier) in iPython notebooks.
+* See inference code in [tl\_classifier.py](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/ros/src/tl_detector/light_classification/tl_classifier.py).
+
+#### Trajectory Planner
+
+* Deceleration profiles are governed a set of kinematic equations of motion in function get_stop_distance(self) inside the code [waypoint\_updater.py](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/ros/src/waypoint_updater/waypoint_updater.py).
+* Safe distance is calculated based on car current speed.
+* If further than safe distance from the traffic light, the car ignores the traffic light's color and accelerates up to cruising speed.
+* Within safe distance of a red traffic light, car decelerates at whatever rate would result in stopping exactly on the stop line. Otherwise the car will keep going.
+* When car within stopping distance (16 meters) of yellow, it start to decelerate.
+
+#### Control Subsystem
+
+This subsystem publishes control commands for the vehicle’s steering, throttle, and brakes based on a list of waypoints to follow.
+
+#### Waypoint Follower Node
+
+This node was given to us by Udacity. It parses the list of waypoints to follow and publishes proposed linear and angular velocities to the /twist_cmd topic
+
+#### Drive By Wire (DBW) Node
+
+The DBW node is the final step in the self driving vehicle’s system. At this point we have a target linear and angular velocity and must adjust the vehicle’s controls accordingly. In this project we control 3 things: throttle, steering, brakes. As such, we have 3 distinct controllers to interface with the vehicle.
+
+#### Throttle Controller
+
+The throttle controller is a simple PID controller that compares the current velocity with the target velocity and adjusts the throttle accordingly. The throttle gains were tuned using trial and error for allowing reasonable acceleration without oscillation around the set-point.
+
+#### Steering Controller
+
+This controller translates the proposed linear and angular velocities into a steering angle based on the vehicle’s steering ratio and wheelbase length. To ensure our vehicle drives smoothly, we cap the maximum linear and angular acceleration rates. The steering angle computed by the controller is also passed through a low pass filter to reduce possible jitter from noise in velocity data.
+
+#### Braking Controller
+
+This is the simplest controller of the three - we simply proportionally brake based on the throttle and the brake deadband.
+
 Please use **one** of the two installation options, either native **or** docker installation.
 
 ### Native Installation
