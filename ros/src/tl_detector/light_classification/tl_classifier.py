@@ -62,16 +62,29 @@ class TLClassifier(object):
         class_state = np.squeeze(classes).astype(np.int32)[0]
         score = np.squeeze(scores)[0]
         
-        if score > 0.4:
+        
+        # if class_state == 1:
+        #     rospy.logwarn(">> {0} GREEN {1}".format(1, score))
+        #     return TrafficLight.GREEN
+        # elif class_state == 2:
+        #     rospy.logwarn(">> {0} RED {1}".format(2, score))
+        #     return TrafficLight.RED
+        # elif class_state == 3:
+        #     rospy.logwarn(">> {0} YELLOW {1}".format(3, score))
+        #     return TrafficLight.YELLOW
+        # else:
+        #     rospy.logwarn(">> {0} UNKNOWN {1}".format(class_state, score))
+        #     return TrafficLight.UNKNOWN
+        if score > 0.2:
             if class_state == 1:
-                # rospy.logwarn(">> {0} GREEN {1}".format(1, score))
+                rospy.logwarn(">> {0} GREEN {1}".format(1, score))
                 return TrafficLight.GREEN
             elif class_state == 2:
-                # rospy.logwarn(">> {0} RED {1}".format(2, score))
+                rospy.logwarn(">> {0} RED {1}".format(2, score))
                 return TrafficLight.RED
             elif class_state == 3:
-                # rospy.logwarn(">> {0} YELLOW {1}".format(3, score))
+                rospy.logwarn(">> {0} YELLOW {1}".format(3, score))
                 return TrafficLight.YELLOW
-
-        # rospy.logwarn(">> {0} UNKNOWN {1}".format(class_state, score))
-        return TrafficLight.UNKNOWN
+        else:
+            rospy.logwarn(">> {0} UNKNOWN {1}".format(class_state, score))
+            return TrafficLight.UNKNOWN

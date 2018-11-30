@@ -32,8 +32,6 @@ class WaypointUpdater(object):
     def __init__(self):
         rospy.init_node('waypoint_updater')
 
-        # rospy.wait_for_message('/current_pose', PoseStamped)
-        # rospy.wait_for_message('/base_waypoints', Lane)
         # The `/current_pose` topic provides the vehicle's current position
         rospy.Subscriber('/current_pose', PoseStamped, self.current_pose_cb)
         # The `/base_waypoints` provides a complete list of waypoints the car will be following
@@ -43,7 +41,7 @@ class WaypointUpdater(object):
         # The `/traffic_waypoint` topic provides locations to stop for red traffic lights
         rospy.Subscriber('/traffic_waypoint', Int32, self.traffic_waypoint_cb)
         # The `/obstacle_waypoint` topic provides locations of obstacles
-        # rospy.Subscriber('/obstacle_waypoint', Int32, self.obstacle_waypoint_cb)
+        rospy.Subscriber('/obstacle_waypoint', Int32, self.obstacle_waypoint_cb)
         rospy.Subscriber('/current_velocity', TwistStamped, self.current_velocity_cb, queue_size=1)
 
         self.final_waypoints_pub = rospy.Publisher('final_waypoints', Lane, queue_size=1)
@@ -68,7 +66,7 @@ class WaypointUpdater(object):
         '''
         rate = rospy.Rate(50)
         while not rospy.is_shutdown():
-
+            # rospy.logwarn("{0},{1},{2}".format(self.current_pose is not None, self.base_line is not None, self.current_velocity is not None))
             if not None in (self.current_pose, self.base_line, self.current_velocity):
                 self.publish_waypoints()
 
@@ -199,8 +197,8 @@ class WaypointUpdater(object):
 
     def decelerate_waypoints(self, waypoints, closest_idx):
         decel_wps = []
-        # 2 waypoints back from line so front of car stops at line
-        stop_idx = max((self.stopline_wp_idx - 2) - closest_idx, 0) if self.stopline_wp_idx is not None else 0
+        # 3 waypoints back from line so front of car stops at line
+        stop_idx = max((self.stopline_wp_idx - 3) - closest_idx, 0) if self.stopline_wp_idx is not None else 0
         while stop_idx >= len(waypoints):
             stop_idx -= len(waypoints)
 
@@ -232,6 +230,7 @@ class WaypointUpdater(object):
         This callback is called once.
         '''
         # Store the waypoint in an object
+        # rospy.logwarn(">> base_waypoints_cb | waypoints: {0}".format(waypoints is not None))
         self.base_line = waypoints
 
         for i in range(len(self.base_line.waypoints)):
