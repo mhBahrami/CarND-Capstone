@@ -12,8 +12,7 @@ import tf
 import cv2
 import yaml
 
-STATE_COUNT_THRESHOLD = 1
-WORLD_TYPE = 'sim'
+STATE_COUNT_THRESHOLD = 3
 
 class TLDetector(object):
     def __init__(self):
@@ -59,14 +58,13 @@ class TLDetector(object):
         self.upcoming_red_light_pub = rospy.Publisher('/traffic_waypoint', Int32, queue_size=1)
 
         self.bridge = CvBridge()
-        self.light_classifier = TLClassifier(WORLD_TYPE)
+        self.light_classifier = TLClassifier(self.config['is_site'])
         self.listener = tf.TransformListener()
 
         self.state = TrafficLight.UNKNOWN
         self.last_state = TrafficLight.UNKNOWN
         self.last_wp = -1
         self.state_count = 0
-        # self.cv2_counter = 0
 
         rospy.spin()
 
@@ -161,9 +159,7 @@ class TLDetector(object):
             return False
 
         cv_image = self.bridge.imgmsg_to_cv2(self.camera_image, "bgr8")
-        # if(self.cv2_counter % 3 == 0):
-        #     cv2.imwrite("./source/count_1_{0}.png".format(self.cv2_counter),cv_image)
-        # self.cv2_counter += 1
+
         #Get classification
         return self.light_classifier.get_classification(cv_image)
 
@@ -186,7 +182,7 @@ class TLDetector(object):
         if(self.pose):
             car_position_idx = self.get_closest_waypoint(self.pose.pose.position.x, self.pose.pose.position.y)
 
-            # Find the closest visible traffic light (if one exists)
+            #TODO find the closest visible traffic light (if one exists)
             diff = len(self.waypoints.waypoints)
             for i, light in enumerate(self.lights):
                 # Get stop line waypoint index
