@@ -15,7 +15,7 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 #### Visualization
 
-[![visualization-video](https://github.com/erlink.png)](https://www.youtube.com)
+- [Highway](https://youtu.be/hxx9eVh6IdU)
 
 #### Traffic Light Detection
 
