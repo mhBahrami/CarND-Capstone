@@ -30,7 +30,7 @@ Click on the following picture to see the end result of the project:
 
 | Simulator model         | Test site model                            |
 |:-----------------------:|:--------------------------------------:|
-| ![simulator model](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/Classification_image/Simulator_image.png)          | ![Test site model](https://github.com/Charlie-Xiaoqi/CarND-Capstone-1/blob/master/Classification_image/Testsite_image.png)
+| ![simulator model](https://github.com/mhBahrami/CarND-Capstone/blob/master/Classification_image/Simulator_image.png)          | ![Test site model](https://github.com/mhBahrami/CarND-Capstone/blob/master/Classification_image/Testsite_image.png)
 
 * Four output classes: `GREEN`, `YELLOW`, `RED`, `UNKNOWN`.
 * Test accuracy: lowest precision was red at 98%, lowest recall was green at 88%.
