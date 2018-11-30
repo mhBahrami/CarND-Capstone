@@ -16,8 +16,8 @@ class TLClassifier(object):
         if is_site:
             PATH_TO_CKPT = r'models/real/frozen_inference_graph.pb'
         else:
-            #PATH_TO_CKPT = r'models/sim/frozen_inference_graph.pb'
-            PATH_TO_CKPT = r'models/sim/frozen_inference_graph_frcnn.pb'
+            PATH_TO_CKPT = r'models/sim/frozen_inference_graph.pb'
+            # PATH_TO_CKPT = r'models/sim/frozen_inference_graph_frcnn.pb'
         
         self.detection_graph = tf.Graph()
         
@@ -78,14 +78,14 @@ class TLClassifier(object):
         #     return TrafficLight.UNKNOWN
         if score > 0.2:
             if class_state == 1:
-                rospy.logwarn(">> {0} GREEN {1}".format(1, score))
+                # rospy.logwarn(">> {0} GREEN {1}".format(1, score))
                 return TrafficLight.GREEN
             elif class_state == 2:
-                rospy.logwarn(">> {0} RED {1}".format(2, score))
+                # rospy.logwarn(">> {0} RED {1}".format(2, score))
                 return TrafficLight.RED
             elif class_state == 3:
-                rospy.logwarn(">> {0} YELLOW {1}".format(3, score))
+                # rospy.logwarn(">> {0} YELLOW {1}".format(3, score))
                 return TrafficLight.YELLOW
         else:
-            rospy.logwarn(">> {0} UNKNOWN {1}".format(class_state, score))
+            # rospy.logwarn(">> {0} UNKNOWN {1}".format(class_state, score))
             return TrafficLight.UNKNOWN
