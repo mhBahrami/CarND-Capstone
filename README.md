@@ -17,7 +17,7 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 You can find an end result of the implementation in the following link:
 
-- [Highway](https://youtu.be/hxx9eVh6IdU)
+[![Highway](https://github.com/mhBahrami/CarND-Capstone/blob/master/Classification_image/Pr4.PNG)](https://youtu.be/hxx9eVh6IdU)
 
 #### Traffic Light Detection
 
