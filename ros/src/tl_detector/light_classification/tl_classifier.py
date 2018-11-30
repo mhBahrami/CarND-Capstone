@@ -16,7 +16,8 @@ class TLClassifier(object):
         if is_site:
             PATH_TO_CKPT = r'models/real/frozen_inference_graph.pb'
         else:
-            PATH_TO_CKPT = r'models/sim/frozen_inference_graph.pb'
+            #PATH_TO_CKPT = r'models/sim/frozen_inference_graph.pb'
+            PATH_TO_CKPT = r'models/sim/frozen_inference_graph_frcnn.pb'
         
         self.detection_graph = tf.Graph()
         
