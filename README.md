@@ -4,10 +4,19 @@ This is the project repo for the final project of the Udacity Self-Driving Car N
 
 ### Team Members
 
-* [Xiaoqi Li](https://github.com/Charlie-Xiaoqi) - Team lead
-* [Mohammad Bahrami](https://github.com/mhBahrami) - Trajectory Planner, Controller, and Integrator
-* [Nikola Noxon](https://github.com/nikolanoxon) - Traffic Light Detection
-* [Tamoghna Das](https://github.com/tamoghna21) - Traffic Light Detection and Controller
+
+
+* [Xiaoqi Li](https://github.com/Charlie-Xiaoqi) (Team lead)
+  - xiaoqil@vt.edu
+* [Mohammad Hossein Bahramimanesh](https://github.com/mhBahrami) 
+  - Trajectory Planner, Controller, and Integrator
+  - bahramimanesh@gmail.com
+* [Nikola Noxon](https://github.com/nikolanoxon) 
+  * Traffic Light Detection
+  * nikolanoxon@gmail.com
+* [Tamoghna Das](https://github.com/tamoghna21) 
+  * Traffic Light Detection and Controller
+  * tamoghna.bec@gmail.com
 
 ### Project Components
 
